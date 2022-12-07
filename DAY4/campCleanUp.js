@@ -1,27 +1,25 @@
 const { readFileSync } = require("fs");
 
-const lines = readFileSync("data.txt", "utf-8").trim().split("\n");
-console.log("data : ", lines);
+const lines = readFileSync("sample.txt", "utf-8").split("\n");
+// console.log("data : ", lines);
 
 function pairsContainer() {
   const res = lines.map((line) => {
     const temp = line
       .split(",")
-      .map((interval) => interval.split("-").map(Number))
-      .sort((a, b) => {
-        const oneSize = a[1] - a[0];
-        const twoSize = b[1] - b[0];
-        return twoSize - oneSize;
-      });
+      .map((interval) => interval.split("-").map(Number));
 
-    const [interval1, interval2] = temp;
+    const [section1, section2] = temp;
 
-    console.log("temp", temp);
+    // console.log("temp", temp);
 
-    const oneFullContainsTwo =
-      interval1[0] <= interval2[0] && interval1[1] >= interval2[1];
+    const oneFullyContainsTwo =
+      section1[0] <= section2[0] && section1[1] >= section2[1];
 
-    return oneFullContainsTwo ? 1 : 0;
+    const twoFullyContainsOne =
+      section2[0] <= section1[0] && section2[1] >= section1[1];
+
+    return oneFullyContainsTwo || twoFullyContainsOne ? 1 : 0;
   });
   console.log("res", res);
   console.log(
@@ -35,21 +33,18 @@ function rangesOverlap() {
   const res = lines.map((line) => {
     const [first, second] = line
       .split(",")
-      .map((interval) => interval.split("-").map(Number))
-      .sort((a, b) => {
-        const oneSize = a[1] - a[0];
-        const twoSize = b[1] - b[0];
-        return twoSize - oneSize;
-      });
+      .map((interval) => interval.split("-").map(Number));
 
     // console.log("temp : ", [first, second]);
 
-    const overlap = first[1] >= second[0] && second[1] >= first[0];
+    const firstOverlap = first[1] >= second[0] && second[1] >= first[0];
+    const secondOverlap = second[1] >= first[0] && first[1] >= second[0];
 
-    return overlap ? 1 : 0;
+    return firstOverlap || secondOverlap ? 1 : 0;
   });
+  console.log("res", res);
   console.log(
-    "There are ",
+    "There are",
     res.reduce((a, b) => a + b, 0),
     "ranges Overlap"
   );
