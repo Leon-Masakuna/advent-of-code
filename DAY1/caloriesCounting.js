@@ -1,8 +1,6 @@
 const { readFileSync } = require("fs");
 const { EOL } = require("os");
 
-// input is an array of objects with 'index', 'values' and 'sum' properties
-// return the index of the largest sum of the numbers in the array
 const getIndexOfMaxCalories = (elves) => {
   // sort the elves array by the 'sum' property
   const sortedElves = elves.sort((a, b) => b.sum - a.sum);
