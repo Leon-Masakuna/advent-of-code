@@ -1,9 +1,9 @@
 const { readFileSync } = require("fs");
 
-const lines = readFileSync("sample.txt", "utf-8").trim().split("\n");
+const lines = readFileSync("data.txt", "utf-8").trim().split("\n");
 console.log("data : ", lines);
 
-function part1() {
+function pairsContainer() {
   const res = lines.map((line) => {
     const temp = line
       .split(",")
@@ -24,10 +24,14 @@ function part1() {
     return oneFullContainsTwo ? 1 : 0;
   });
   console.log("res", res);
-  console.log(res.reduce((a, b) => a + b, 0));
+  console.log(
+    "There are",
+    res.reduce((a, b) => a + b, 0),
+    "pairs containers"
+  );
 }
 
-function part2() {
+function rangesOverlap() {
   const res = lines.map((line) => {
     const [first, second] = line
       .split(",")
@@ -38,12 +42,18 @@ function part2() {
         return twoSize - oneSize;
       });
 
+    // console.log("temp : ", [first, second]);
+
     const overlap = first[1] >= second[0] && second[1] >= first[0];
 
     return overlap ? 1 : 0;
   });
-  console.log(res.reduce((a, b) => a + b, 0));
+  console.log(
+    "There are ",
+    res.reduce((a, b) => a + b, 0),
+    "ranges Overlap"
+  );
 }
 
-part1();
-// part2();
+pairsContainer();
+rangesOverlap();
